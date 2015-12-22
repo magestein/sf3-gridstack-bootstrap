@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1><a href="{{ path('homepage') }}">Symfony 3.0 - Gridstack.js with Bootstrap 3</a></h1>
+
+        <form>Session ID:
+            <input id="sessionId" name="sessionId" type="text" size="30" value="{{ session_id }}" />
+            <a id="load" class="btn btn-primary" href="{{ path('homepage') }}" data-url="{{ path('homepage') }}">
+                Load from database</a>
+        </form>
+
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div id="serialized"></div>
+
+        <!-- TODO when outputting this, get from order table by user and box-id and print coordonates -->
+        <div class="grid-stack" data-save="{{ path('save') }}">
+            {% for box in grid %}
+                {{ include('box.html.twig', { 'box': box}) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var options = {
+                float: true
+            };
+
+            var $gridstack = $('.grid-stack');
+            $gridstack.gridstack(options);
+
+            // Serialize and save on change
+            $gridstack.on('change', function (e, items) {
+                var res = _.map($('.grid-stack .grid-stack-item:visible'), function (el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    return {
+                        id: el.attr('data-custom-id'),
+                        x: node.x,
+                        y: node.y,
+                        width: node.width,
+                        height: node.height
+                    };
+                });
+
+                // Save serialized grid to database
+                console.log($(this).attr('data-save'));
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('data-save'),
+                    data: { "serialized": JSON.stringify(res), "sessionId": "{{ session_id}}"},
+                    dataType: 'json',
+                    success: function (data, dataType) {
+                        $('#serialized').html('<div class="alert alert-success"><strong>Saved successfully:</strong> '
+                                + JSON.stringify(res) + '. <strong>Reload</strong> to see the variations for ' +
+                                'resized boxes.</div>');
+                    }
+                });
+            });
+
+            // reload grid from database by redirecting
+            $('#load').click(function(e) {
+                window.location.href = $(this).attr('data-url') + $('#sessionId').val();
+
+                e.preventDefault();
+            });
+        });
+    </script>
+{% endblock %}

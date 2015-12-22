@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Symfony 3.0 - Gridstack.js with Bootstrap 3{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="{{ asset('css/gridstack.css') }}"/>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+        <script src="{{ asset('js/gridstack.js') }}"></script>
+        <style type="text/css">
+            form {margin-bottom: 10px;}
+            .grid-stack { background: #eaeaea; }
+
+            .grid-stack-item-content {
+                color: #fff;
+                background-color: #357ebd;
+                vertical-align: middle;
+                padding: 15px;
+            }
+            .grid-stack-placeholder > .placeholder-content {border-color: #999 !important;}
+            .grid-stack > .grid-stack-item > .ui-resizable-se::before {color: #fff;}
+
+            .medium .grid-stack-item-content {background: #7bbc61;}
+            .small .grid-stack-item-content {background: #cd2c2f;}
+
+            .grid-stack-item-content h2,
+            .grid-stack-item-content h3,
+            .grid-stack-item-content h4 {text-transform: uppercase; letter-spacing: 3px;}
+            .grid-stack-item-content ul {margin-left: 0; padding-left: 10px;}
+            .small .grid-stack-item-content a {color: #ff9ca1}
+            .medium .grid-stack-item-content a {color: #c5ffb7}
+            .full .grid-stack-item-content a {color: #a8d7ff
+            }
+        </style>
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

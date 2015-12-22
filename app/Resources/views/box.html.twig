@@ -1,0 +1,12 @@
+{% set variant = 'full' %}
+{% if box.width < 7 %}{% set variant = 'medium' %}{% endif %}
+{% if box.width < 4 %}{% set variant = 'small' %}{% endif %}
+<div class="grid-stack-item {{ variant }}"
+     data-custom-id="{{ box.id }}"
+     data-gs-x="{{ box.x }}" data-gs-y="{{ box.y }}"
+     data-gs-width="{{ box.width }}" data-gs-height="{{ box.height }}"
+     data-gs-min-width="2" data-gs-min-height="2">
+    <div class="grid-stack-item-content">
+        {{ include('variants/' ~ variant ~ '.html.twig', { 'content': box}) }}
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<h3>{{ box.id }}</h3>
+<ul>
+    {% for item in box.content %}
+        <li><a href="#">{{ item.title }}</a>
+            {% if loop.index == 1 and box.height > 3 %}{{ item.content }}
+            {% elseif loop.index == 1 %}
+                {{ item.content|slice(0, 70) }}... <a href="#">read more</a>
+            {% endif %}</li>
+    {% endfor %}
+</ul>

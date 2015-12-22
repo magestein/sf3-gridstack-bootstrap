@@ -1,0 +1,6 @@
+<h4>{{ box.id }}</h4>
+<ul>
+    {% for item in box.content %}
+        <li><a href="#">{{ item.title }}</a></li>
+    {% endfor %}
+</ul>
